@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Cerveja</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card>
+    <img src="http://192.168.5.69:8100/assets/img/uploads/{{cliente.img}}"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{cliente.name}}
+      </ion-card-title>
+      <p>
+        Endereço: <strong>{{cliente.endereco}}</strong> - Idade: <strong>{{cliente.idade}}</strong>
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
