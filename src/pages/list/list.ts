@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { AuthProvider } from './../../providers/auth/auth';
+import { HttpServiceProvider } from '../../providers/http-service/http-service';
 
 @Component({
   selector: 'page-list',
@@ -8,30 +12,57 @@ import { NavController, NavParams } from 'ionic-angular';
 export class ListPage {
   selectedItem: any;
   icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+  public cliente =  {
+    name: "",
+    endereco: "",
+    idade: "",
+    img: "",
+  };
 
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
+  constructor(public navCtrl: NavController,
+              public toastCtrl: ToastController,
+              public navParams: NavParams,
+              public http: HttpServiceProvider,
+              public camera: Camera,
+              public authService: AuthProvider
+  ) {
 
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
+  ionViewCanEnter() {
+    //return this.authService.userIsLogged();
+  }
+
+  saveCliente(cliente) {
+
+    this.http.post('clientes', cliente)
+      .subscribe(data => {
+        let toast = this.toastCtrl.create({
+          message: data.msg,
+          duration: 3000
+        });
+        toast.present();
+      });
+
+  }
+
+  getPhoto() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.cliente.img = base64Image;
+
+    }, (err) => {
+      console.log(err);
     });
   }
+
+
 }

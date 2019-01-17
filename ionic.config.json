@@ -1,5 +1,7 @@
 {
   "name": "ionic-3-essencial",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
