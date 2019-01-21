@@ -21,8 +21,8 @@ export class HomePage {
     this.http.getAll('clientes')
       .subscribe(data => {
         this.clientes = data;
-        console.log("TESTE"+data[1]);
       });
+
   }
 
   getClientesInfo(id) {

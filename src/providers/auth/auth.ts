@@ -35,7 +35,7 @@ export class AuthProvider {
   }
 
   userIsLogged() {
-    return this.storage.get('token').then(value => {
+    return this.storage.get('token').then(val => {
       if(val) {
         return val;
       } else {

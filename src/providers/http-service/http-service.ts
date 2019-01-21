@@ -6,14 +6,19 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class HttpServiceProvider {
 
-  private url:string = 'https://localhost:8000/clientes';
+  private url:string = 'api';
 
   constructor(public http: Http) {
-    //console.log('Hello HttpServiceProvider Provider');
   }
 
   getAll(endpoint) {
-    return this.http.get(`${this.url}/${endpoint}`)
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(`${this.url}/${endpoint}/`, options)
       .map(res => {
         return res.json();
       });
@@ -21,7 +26,7 @@ export class HttpServiceProvider {
 
   get(endpoint, id) {
 
-    return this.http.get(`${this.url}/${endpoint}/${id}`)
+    return this.http.get(`${this.url}/${endpoint}/${id}/`)
       .map(res => res.json())
   }
 
@@ -29,9 +34,10 @@ export class HttpServiceProvider {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
+
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(`${this.url}/${endpoint}`, resource, options)
+    return this.http.post(`${this.url}/${endpoint}/`, resource, options)
       .map(res => {
         res.json();
       });

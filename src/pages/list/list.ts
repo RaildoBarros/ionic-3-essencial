@@ -17,7 +17,6 @@ export class ListPage {
     name: "",
     endereco: "",
     idade: "",
-    img: "",
   };
 
   constructor(public navCtrl: NavController,
@@ -31,7 +30,7 @@ export class ListPage {
   }
 
   ionViewCanEnter() {
-    //return this.authService.userIsLogged();
+    return this.authService.userIsLogged();
   }
 
   saveCliente(cliente) {
@@ -47,22 +46,22 @@ export class ListPage {
 
   }
 
-  getPhoto() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.cliente.img = base64Image;
-
-    }, (err) => {
-      console.log(err);
-    });
-  }
+  // getPhoto() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE
+  //   }
+  //
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     let base64Image = 'data:image/jpeg;base64,' + imageData;
+  //     this.cliente.img = base64Image;
+  //
+  //   }, (err) => {
+  //     console.log(err);
+  //   });
+  // }
 
 
 }
